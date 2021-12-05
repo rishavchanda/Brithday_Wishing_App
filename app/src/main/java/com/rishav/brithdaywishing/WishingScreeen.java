@@ -30,7 +30,6 @@ public class WishingScreeen extends AppCompatActivity {
     //View Binding
     ActivityWishingScreeenBinding binding;
     ImageView img;
-    ConstraintLayout view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +44,7 @@ public class WishingScreeen extends AppCompatActivity {
         binding.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                BitmapDrawable bitmapDrawable = (BitmapDrawable) img.getDrawable();
-                Bitmap image = getBitmapFromView(binding.root);
-                Bitmap bitmap = bitmapDrawable.getBitmap();
+                Bitmap image = getBitmapFromView(binding.finalImage);
                 shareImageandText(image);
             }
         });
