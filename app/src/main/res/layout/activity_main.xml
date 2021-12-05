@@ -38,11 +38,11 @@
           android:layout_height="50dp"
           android:layout_marginTop="25dp"
           android:background="@drawable/border"
-          android:hint="Rishav Chanda"
+          android:hint="Enter a Name.."
           android:textColor="@color/white"
           android:padding="12dp"
           android:textSize="18sp"
-          android:textColorHint="@color/white"
+          android:textColorHint="#989494"
           />
 
       <Button
