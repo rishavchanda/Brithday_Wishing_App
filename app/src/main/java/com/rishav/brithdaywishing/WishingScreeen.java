@@ -29,82 +29,83 @@ public class WishingScreeen extends AppCompatActivity {
 
     //View Binding
     ActivityWishingScreeenBinding binding;
-    ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityWishingScreeenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        //To take the input
         Intent intent = getIntent();
-        //intent.getExtras();
-        String Name = intent.getExtras().getString("Name");
-        binding.name.setText(Name);
-        img = findViewById(R.id.birthdayBackground);
+        String name = intent.getExtras().getString("Name");
+
+        binding.name.setText(name);
+
+        //working with share button
         binding.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Share the Image
                 Bitmap image = getBitmapFromView(binding.finalImage);
-                shareImageandText(image);
+                shareImageAndText(image);
             }
         });
     }
 
-    private Bitmap getBitmapFromView(View view) {
-        //Define a bitmap with the same size as the view
-        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(),Bitmap.Config.ARGB_8888);
-        //Bind a canvas to it
-        Canvas canvas = new Canvas(returnedBitmap);
-        //Get the view's background
-        Drawable bgDrawable =view.getBackground();
-        if (bgDrawable!=null) {
-            //has background drawable, then draw it on the canvas
-            bgDrawable.draw(canvas);
-        }   else{
-            //does not have background drawable, then draw white background on the canvas
-            canvas.drawColor(Color.WHITE);
-        }
-        // draw the view on the canvas
-        view.draw(canvas);
-        //return the bitmap
-        return returnedBitmap;
-    }
-
-    private void shareImageandText(Bitmap bitmap) {
-        Uri uri = getmageToShare(bitmap);
+    private void shareImageAndText(Bitmap image) {
+        Uri uri = getImageToShare(image);
         Intent intent = new Intent(Intent.ACTION_SEND);
 
-        // putting uri of image to be shared
-        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        //putting the uri of image to be shared
+        intent.putExtra(Intent.EXTRA_STREAM,uri);
 
-        // adding text to share
-        intent.putExtra(Intent.EXTRA_TEXT, "Sharing Image");
+        //Add the message of happy birthday
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Happy Birthday and many many happy returns of the day!!");
 
-        // Add subject Here
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Subject Here");
-
-        // setting type to image
+        //setting type of image
         intent.setType("image/png");
 
-        // calling startactivity() to share
-        startActivity(Intent.createChooser(intent, "Share Via"));
+        //calling startActivity to share
+        startActivity(Intent.createChooser(intent, "Share Image Via:"));
     }
 
-    // Retrieving the url to share
-    private Uri getmageToShare(Bitmap bitmap) {
-        File imagefolder = new File(getCacheDir(), "images");
+    private Uri getImageToShare(Bitmap image) {
+        File imageFolder = new File(getCacheDir(), "images");
         Uri uri = null;
-        try {
-            imagefolder.mkdirs();
-            File file = new File(imagefolder, "shared_image.png");
+        try{
+
+            imageFolder.mkdirs();
+            File file = new File(imageFolder, "birthday_image.png");
             FileOutputStream outputStream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 90, outputStream);
+            image.compress(Bitmap.CompressFormat.PNG,100,outputStream);
             outputStream.flush();
             outputStream.close();
-            uri = FileProvider.getUriForFile(this, "com.anni.shareimage.fileprovider", file);
-        } catch (Exception e) {
+            uri = FileProvider.getUriForFile(this,"com.rishav.shareImage.fileProvider",file);
+
+        }catch (Exception e){
             Toast.makeText(this, "" + e.getMessage(), Toast.LENGTH_LONG).show();
         }
         return uri;
     }
+
+    private Bitmap getBitmapFromView(View view) {
+        //Define a bitmap with same height and width
+        Bitmap returnedBitmap = Bitmap.createBitmap(view.getWidth(),view.getHeight(),Bitmap.Config.ARGB_8888);
+        //Bind a canvas to it
+        Canvas canvas = new Canvas(returnedBitmap);
+        //Get the background view of layout
+        Drawable background = view.getBackground();
+        if(background != null){
+            background.draw(canvas);
+        }else{
+            canvas.drawColor(Color.WHITE);
+        }
+        //draw the view on canvas
+        view.draw(canvas);
+
+        return returnedBitmap;
+
+    }
+
 }

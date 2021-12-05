@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("Name", input);
                     startActivity(intent);
                 }else{
-                    Toast.makeText(MainActivity.this, "Enter Name first", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Please enter your name", Toast.LENGTH_SHORT).show();
                 }
 
             }
