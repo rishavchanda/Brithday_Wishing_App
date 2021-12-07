@@ -29,7 +29,7 @@ public class WishingScreeen extends AppCompatActivity {
 
     //View Binding
     ActivityWishingScreeenBinding binding;
-
+    String name,msg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +38,8 @@ public class WishingScreeen extends AppCompatActivity {
 
         //To take the input
         Intent intent = getIntent();
-        String name = intent.getExtras().getString("Name");
+        name = intent.getExtras().getString("Name");
+        msg = "Happy Birthday "+name+" \uD83C\uDF89 and many many happy returns of the day!! \uD83C\uDF82 \uD83E\uDD73 \uD83C\uDF89 \uD83C\uDF81 \uD83C\uDF8A \uD83E\uDDC1 \uD83C\uDF70";
 
         binding.name.setText(name);
 
@@ -61,7 +62,7 @@ public class WishingScreeen extends AppCompatActivity {
         intent.putExtra(Intent.EXTRA_STREAM,uri);
 
         //Add the message of happy birthday
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Happy Birthday and many many happy returns of the day!!");
+        intent.putExtra(Intent.EXTRA_TEXT,msg );
 
         //setting type of image
         intent.setType("image/png");
